@@ -1,0 +1,21 @@
+
+# in the man-page before 0.12, messages from the original authors
+
+PROJ.4 offers a C<pj_transform()> function that would be really
+cool to add to this module, but... PROJ.4 expects spherical coordinates
+(i.e. lat and long) in radians, whereas most ordinary people think
+of lat and long in degrees. Ordinarily, Geo::Proj4 takes care of this
+for you transparently, but in the case of the proposed C<transform()>
+method, the list of points to be transformed between two cartographic
+projections might be spherical or planar in zero, one, or both of the
+input and output lists. We could supply helper functions to allow a
+developer to perform the degree-to-radian and reverse as needed before
+or after the call to C<transform()>, but... would anyone use this,
+or would you just rely on cs2cs?
+
+Passing undef as the value to a boolean parameter is an ugly interface.
+                                                                                
+Needs more tests!  Especially of border cases.
+                                                                                
+Needs more samples in the samples directory!
+

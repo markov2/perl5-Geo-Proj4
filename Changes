@@ -1,0 +1,18 @@
+Revision history for Perl extension Geo::Proj4.
+
+version 0.95: (public release)
+
+version 0.12: Sat Nov 19 10:37:45 CET 2005  (internal release)
+	- new maintainer: Mark Overmeer
+	- converted ExtUtils::MakeMaker in Makefile.PL
+	- moved Proj4.pm to lib/Geo/Proj4
+	- create manual page with OODoc, to be able to integrate it with
+	  Geo::Point docs.
+	- So many extensions!!!!
+
+version 0.11: Sat Mar 27 15:52:42 PST 2004
+	- Fixed build errors in typemap with more current versions of gcc.
+	- Switched Makefile.PL to use Module::Install.
+
+version 0.10: Sat Mar 27 03:44:33 PST 2004
+	- Initial cut of Geo::Proj4.
