@@ -1,6 +1,7 @@
 Revision history for Perl extension Geo::Proj4.
 
-version 0.95: (public release)
+version 0.95: Fri Nov 25 17:27:21 CET 2005  (public release)
+	- minor doc improvements
 
 version 0.12: Sat Nov 19 10:37:45 CET 2005  (internal release)
 	- new maintainer: Mark Overmeer

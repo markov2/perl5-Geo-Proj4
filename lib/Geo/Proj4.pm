@@ -1,7 +1,5 @@
 package Geo::Proj4;
 
-require 5.006;
-
 use strict;
 use warnings;
 
@@ -86,8 +84,9 @@ sub new($@)
     }
     else
     {   my @args;
-        while (my ($key, $val) = (shift, shift)
-        {   push @args, "+key".(defined $val ? "=$val" : '')
+        while(@_)
+        {   my ($key, $val) = (shift, shift);
+            push @args, "+$key".(defined $val ? "=$val" : '');
 	}
         $def = join ' ', @args;
     }
