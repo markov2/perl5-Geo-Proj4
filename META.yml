@@ -1,11 +1,10 @@
-name: Geo-Proj4
-version: 0.11
-author: Schuyler Erle <schuyler@nocat.net>, Rich Gibson <rich@nocat.net>
-license: perl
-distribution_type: module
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         Geo-Proj4
+version:      undef
+version_from: lib/Geo/Proj4.pm
+installdirs:  site
 requires:
-  perl: 5.6.0
-no_index:
-  directory:
-    - inc
-generated_by: Module::Install version 0.33
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.17

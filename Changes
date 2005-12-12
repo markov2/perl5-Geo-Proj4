@@ -1,5 +1,11 @@
 Revision history for Perl extension Geo::Proj4.
 
+version 0.97:
+
+version 0.96: Mon Dec 12 11:58:18 CET 2005
+	- added projection() and datum()
+	- renamed or datum(), ellipsoid(), and unit() into ....Info()
+
 version 0.95: Fri Nov 25 17:27:21 CET 2005  (public release)
 	- minor doc improvements
 

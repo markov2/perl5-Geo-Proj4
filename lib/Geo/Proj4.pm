@@ -2,6 +2,7 @@ package Geo::Proj4;
 
 use strict;
 use warnings;
+#our $VERSION = '0.96';
 
 use base 'DynaLoader';
 
@@ -9,7 +10,7 @@ use Scalar::Util   qw/dualvar/;
 use Carp           qw/croak/;
 
 # The library definitions
-bootstrap Geo::Proj4 $VERSION;
+bootstrap Geo::Proj4; # $VERSION;
 
 =chapter NAME
 
@@ -126,6 +127,24 @@ sub normalized()
 {   my $norm = normalized_proj4(shift);
     $norm =~ s/^\s+//;
     $norm;
+}
+
+=method datum
+Tries to return a datum name for this projection.
+=cut
+
+sub datum()
+{   my $norm = shift->normalized;
+    $norm =~ m/\+datum\=(w+)/ ? $1 : undef;
+}
+
+=method projection
+Returns the projection type.
+=cut
+
+sub projection()
+{   my $norm = shift->normalized;
+    $norm =~ m/\+proj\=(w+)/ ? $1 : undef;
 }
 
 =method dump
@@ -331,12 +350,12 @@ Returns a list with all defined projection types.
 
 sub listTypes() { &def_types_proj4 }
 
-=c_method type LABEL
+=c_method typeInfo LABEL
 Returns a hash with information about the specified projection type.  With
 M<listTypes()>, all defined LABELS can be found.
 =cut
 
-sub type($)
+sub typeInfo($)
 {   my $label = $_[1];
     my %def = (id => $label);
     my($descr) = type_proj4($label);
@@ -357,12 +376,12 @@ Returns a list with all defined ellips labels.
 
 sub listEllipsoids() { &def_ellps_proj4 }
 
-=c_method ellipsoid LABEL
+=c_method ellipsoidInfo LABEL
 Returns a hash with information about the specified ellipsis.  With
 M<listEllipsoids()>, all defined LABELS can be found.
 =cut
 
-sub ellipsoid($)
+sub ellipsoidInfo($)
 {   my $label = $_[1];
     my %def = (id => $label);
     @def{ qw/major ell name/ } = ellps_proj4($label);
@@ -381,12 +400,12 @@ Returns a list with all defined unit labels.
 
 sub listUnits() { &def_units_proj4 }
 
-=c_method unit LABEL
+=c_method unitInfo LABEL
 Returns a hash with information about the specified unit.  With
 M<listUnits()>, all defined LABELS can be found.
 =cut
 
-sub unit($)
+sub unitInfo($)
 {   my $label = $_[1];
     my %def = (id => $label);
     @def{ qw/to_meter name/ } = unit_proj4($label);
@@ -406,12 +425,12 @@ Returns a list with all defined datum labels.
 
 sub listDatums() { &def_datums_proj4 }
 
-=c_method datum LABEL
+=c_method datumInfo LABEL
 Returns a hash with information about the specified datum.  With
 M<listDatums()>, all defined LABELS can be found.
 =cut
 
-sub datum($)
+sub datumInfo($)
 {   my $label = $_[1];
     my %def = (id => $label);
     @def{ qw/ellipse_id definition comments/ } = datum_proj4($label);
