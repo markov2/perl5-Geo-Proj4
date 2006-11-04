@@ -1,6 +1,9 @@
 Revision history for Perl extension Geo::Proj4.
 
-version 0.97:
+version 0.97: Sat Nov  4 12:14:22 CET 2006
+	- Avoid double free() on DESTROY by simply forgetting to free
+	  the memory.  Of course this leaks, which should be fixed in
+	  next release.
 
 version 0.96: Mon Dec 12 11:58:18 CET 2005
 	- added projection() and datum()

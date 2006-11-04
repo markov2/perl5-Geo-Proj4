@@ -374,4 +374,7 @@ DESTROY(proj)
 	projPJ proj
     PROTOTYPE: $
     CODE:
-	pj_free(proj);
+	/* cloned objects also call DESTROY, which is a very   */
+	/* bad idea.  Therefore, the memory will not  be freed */
+	/* until a major rewrite avoids this problem.          */
+	/* pj_free(proj); */
