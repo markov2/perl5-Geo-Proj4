@@ -1,5 +1,7 @@
 #!/usr/bin/perl -w
-use lib qw[blib/lib blib/arch];
+# when run, it will show all definitions.
+
+use lib qw[blib/lib blib/arch ../blib/lib ../blib/arch];
 
 use Geo::Proj4;
 

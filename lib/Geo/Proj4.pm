@@ -31,7 +31,11 @@ Geo::Proj4 - PROJ.4 cartographic projections library
 
   if($proj->hasInverse)
   {   my ($lat, $lon) = $proj->inverse($x, $y);
+      ...
   }
+
+  my $proj = Geo::Proj4->new(init => "epsg:26985") or die;
+  my ($lat, $lon) = $proj->inverse(401717.80, 130013.88);
 
   my $point = [ 123.12, -5.4 ];
   my $projected_point = $from->transform($to, $point);
@@ -56,7 +60,8 @@ on both source and destination projection and use M<transform()>.
 =c_method new STRING|OPTIONS
 The object defines the target projection, but that's easier said than
 done: projections have different parameter needs.  The parameters which
-can (or need to) be used are listed with C<cs2cs -lP>.
+can (or need to) be used are listed with C<cs2cs -lP>.  The manual
+page of C<cs2cs> explains how the configuration works.
 
 Two ways are provided to define the projection.  Either, use a list
 of OPTIONS, which are pairs of parameters, or pass one string which
@@ -273,13 +278,14 @@ See M<transformRad()>
  my $pr_point1 = $pr->[0];
  my $pr_point2 = $pr->[1];
 
+=error transform() expects array of points
 =cut
 
 sub transform($$)
 {   my ($self, $to, $points) = @_;
 
-    croak "ERROR: expects point array"
-        unless ref $points;
+    ref $points eq 'ARRAY'
+       or croak "ERROR: transform() expects array of points";
 
     my ($err, $errtxt, $pr);
     if(ref($points->[0]) eq 'ARRAY')
@@ -300,13 +306,15 @@ as two or three values in an ARRAY.  In case of latlong source or
 destination projections, coordinates are expected to be in radians.
 Both input and output values are always in X-Y/LongLat order.
 See M<transform()>
+
+=error transformRad() expects array of points
 =cut
 
 sub transformRad($$)
 {   my ($self, $to, $points) = @_;
 
-    croak "ERROR: expects point array"
-        unless ref $points;
+    ref $points eq 'ARRAY'
+        or croak "ERROR: transformRad() expects array of points";
 
     my ($err, $errtxt, $pr);
     if(ref($points->[0]) eq 'ARRAY')
@@ -472,17 +480,8 @@ Also be warned  that the values must have the right sign. Make sure you
 give negative values for south latitude and west longitude.  For
 calculating projections, this is more important than on maps.
 
-=chapter REFERENCES
-
-See the Geo::Point website at L<http://perl.overmeer.net/geopoint/> for
-an html version of this and related modules.
-
-Effusive thanks to Frank Warmerdam (maintainer of PROJ.4) and Gerald
-Evenden (main contributor of PROJ.4). Their PROJ.4 library home page:
-L<http://www.remotesensing.org/proj/>
-
-proj(1), cs2cs(1), pj_init(3).
-
 =cut
+
+# more text in PODTAIL.txt
 
 1;

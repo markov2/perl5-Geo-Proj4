@@ -4,11 +4,10 @@ MANIFEST
 META.yml                                Module meta-data (added by MakeMaker)
 Makefile.PL
 Proj4.xs
-eg/sample.pl
+examples/sample.pl
+examples/test_list.pl
+examples/use_epsg.pl
 lib/Geo/Proj4.pm
-ppport.h
 t/10utm.t
 t/20clark80.t
-test_list
 typemap
-version
