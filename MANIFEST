@@ -10,4 +10,5 @@ examples/use_epsg.pl
 lib/Geo/Proj4.pm
 t/10utm.t
 t/20clark80.t
+t/pod.t
 typemap

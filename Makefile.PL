@@ -26,7 +26,7 @@ die "ERROR: libproj too old, found $version required is $libversion\n"
 
 WriteMakefile
  ( NAME     => 'Geo::Proj4'
- , VERSION  => '0.98'
+ , VERSION  => '0.99'
  , AUTHOR   => 'Mark Overmeer'
  , ABSTRACT => 'Proj4 library for carthographic projections'
  , CCFLAGS  => "-I$FWTools/include"

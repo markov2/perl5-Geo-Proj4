@@ -7,7 +7,7 @@ use Geo::Proj4 ();
 
 my $epsg = 26985;
 my $proj = Geo::Proj4->new(init => "epsg:$epsg")
-  or die "cannot use EPGS 26985: ",Geo::Proj4->error, "\n";
+  or die "cannot use EPSG 26985: ",Geo::Proj4->error, "\n";
 
 my ($x, $y) = (401717.80, 130013.88);
 my ($lat, $lon) = $proj->inverse($x, $y);

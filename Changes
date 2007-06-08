@@ -1,5 +1,11 @@
 Revision history for Perl extension Geo::Proj4.
 
+version 0.99: Fri Jun  8 17:08:40 CEST 2007
+
+	- EPGS -> EPSG in example script [Michael R. Davis]
+
+	- added t/pod.t
+
 version 0.98: Fri Mar  9 14:16:09 CET 2007
 
 	- moved eg/ to examples/, probably easier to find.
