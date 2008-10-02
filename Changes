@@ -1,5 +1,10 @@
 Revision history for Perl extension Geo::Proj4.
 
+version 1.00: Thu Oct  2 23:27:31 CEST 2008
+
+	- XS should use Safefree(), not free().  Marvellous fix
+	  by rt.cpan.org#39749 [Dan Stahlke]
+
 version 0.99: Fri Jun  8 17:08:40 CEST 2007
 
 	- EPGS -> EPSG in example script [Michael R. Davis]

@@ -26,17 +26,19 @@ die "ERROR: libproj too old, found $version required is $libversion\n"
 
 WriteMakefile
  ( NAME     => 'Geo::Proj4'
- , VERSION  => '0.99'
+ , VERSION  => '1.00'
  , AUTHOR   => 'Mark Overmeer'
  , ABSTRACT => 'Proj4 library for carthographic projections'
  , CCFLAGS  => "-I$FWTools/include"
  , LIBS     => [ "-L$FWTools/lib -lproj" ]
+ , LICENSE  => 'perl'
  );
 
 ### used by oodist during production of this distribution
 sub MY::postamble { <<'__POSTAMBLE' }
 
 # for DIST, see PODTAIL.txt as well
+LICENSE		= artistic
 RAWDIR          = ../public_html/geoproj4/raw
 DISTDIR         = ../public_html/geoproj4/source
 __POSTAMBLE

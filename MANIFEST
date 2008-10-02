@@ -1,7 +1,7 @@
 Changes
 INSTALL
 MANIFEST
-META.yml                                Module meta-data (added by MakeMaker)
+META.yml
 Makefile.PL
 Proj4.xs
 examples/sample.pl

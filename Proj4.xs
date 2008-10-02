@@ -202,9 +202,9 @@ transform_proj4(proj_from, proj_to, points, degrees)
 	    XPUSHs(sv_2mortal(newSVpv(pj_strerrno(pj_errno),0)));
 	}
 
-	free(x);
-	free(y);
-	free(z);
+	Safefree(x);
+	Safefree(y);
+	Safefree(z);
 
 
 int
