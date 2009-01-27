@@ -1,5 +1,17 @@
 Revision history for Perl extension Geo::Proj4.
 
+version 1.01: Tue Jan 27 16:41:47 CET 2009
+
+	- show ->new(init => ) example in main man-page.
+	  Contributed by [Michael R. Davis]
+
+	- improved output of examples/test_list.pl
+
+	- do not list latlong/longlat/geocent as projections,
+	  because "proj -l" doesn't either.
+
+	- tested with 4.6.1
+
 version 1.00: Thu Oct  2 23:27:31 CEST 2008
 
 	- XS should use Safefree(), not free().  Marvellous fix

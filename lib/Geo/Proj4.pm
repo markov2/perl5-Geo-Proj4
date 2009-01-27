@@ -27,6 +27,8 @@ Geo::Proj4 - PROJ.4 cartographic projections library
   my $proj = Geo::Proj4->new("+proj=merc +ellps=clrk66 +lon_0=-96")
        or die "parameter error: ".Geo::Proj4->error. "\n";
 
+  my $proj = Geo::Proj4->new(init => "epsg:28992");
+
   my ($x, $y) = $proj->forward($lat, $lon);
 
   if($proj->hasInverse)
@@ -77,6 +79,8 @@ south parameter to the UTM projection) with a matching value of undef.
 
  my $proj = Geo::Proj4->new("+proj=merc +ellps=clrk66 +lon_0=096")
     or die Geo::Proj4->error;
+
+ my $proj = Geo::Proj4->new(init => "epsg:$epsg");
 =cut
 
 my $last_error;

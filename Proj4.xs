@@ -241,7 +241,13 @@ def_types_proj4(void)
     PPCODE:
 #if PJ_VERSION >= 449
 	for(type = pj_get_list_ref(); type->id; type++)
-	{   PUSHs(sv_2mortal(newSVpv(type->id, 0)));
+	{   /* same as "proj -l" does */
+            if(   strcmp(type->id,"latlong")==0
+               || strcmp(type->id,"longlat")==0
+               || strcmp(type->id,"geocent")==0
+              ) continue;
+
+            PUSHs(sv_2mortal(newSVpv(type->id, 0)));
         }
 #endif
 
