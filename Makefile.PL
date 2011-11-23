@@ -3,18 +3,21 @@ use ExtUtils::MakeMaker;
 require 5.006;
 
 my $libversion = '4.4.9';
-my $FWTools    = $ENV{GEOPROJ_FWTOOLS_DIR} || '.';
 
-# This is very UNIX/Linux centric.  Please help me with the
+# Should also work when you do not have FWTools installed...
+my $FWTools    = $ENV{GEOPROJ_FWTOOLS_DIR}
+              || $ENV{FWTOOLS_DIR}           # windows
+              || '.';
+
+# This is part is very UNIX/Linux centric.  Please help me with the
 # required windows tests.
-
 my $FWbin      = "$FWTools/bin_safe";
 my $cs2cs      = -x "$FWbin/cs2cs" ? "$FWbin/cs2cs" : 'cs2cs';
 
 die "ERROR: proj library too old or not found: require $libversion\n"
-   unless open DIR, "$cs2cs -v 2>&1 |";
+   unless open CS, "$cs2cs 2>&1 |";
 
-my $got = <DIR>;
+my $got = <CS>;
 
 die "ERROR: proj library version not known\n"
    unless $got =~ m/\ ([\d.]+)\,/;
@@ -26,10 +29,10 @@ die "ERROR: libproj too old, found $version required is $libversion\n"
 
 WriteMakefile
  ( NAME     => 'Geo::Proj4'
- , VERSION  => '1.01'
+ , VERSION  => '1.02'
  , AUTHOR   => 'Mark Overmeer'
  , ABSTRACT => 'Proj4 library for carthographic projections'
- , CCFLAGS  => "-I$FWTools/include"
+ , INC      => "-I$FWTools/include"
  , LIBS     => [ "-L$FWTools/lib -lproj" ]
  , LICENSE  => 'perl'
  );

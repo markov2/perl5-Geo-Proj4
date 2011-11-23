@@ -1,5 +1,17 @@
 Revision history for Perl extension Geo::Proj4.
 
+version 1.02: Wed Nov 23 09:24:16 CET 2011
+
+	Fixes:
+
+	- with Perl 14.2, the XS compile flags changed slightly causing
+	  a Dynaloader error.
+          rt.cpan.org#72626 [Dirk Stöcker]
+
+	Improvements:
+
+	- a little better installation under Windows [André Joost]
+
 version 1.01: Tue Jan 27 16:41:47 CET 2009
 
 	- show ->new(init => ) example in main man-page.

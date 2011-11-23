@@ -289,7 +289,7 @@ sub transform($$)
 {   my ($self, $to, $points) = @_;
 
     ref $points eq 'ARRAY'
-       or croak "ERROR: transform() expects array of points";
+        or croak "ERROR: transform() expects array of points";
 
     my ($err, $errtxt, $pr);
     if(ref($points->[0]) eq 'ARRAY')
