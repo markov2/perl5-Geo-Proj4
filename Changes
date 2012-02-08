@@ -1,5 +1,12 @@
 Revision history for Perl extension Geo::Proj4.
 
+version 1.03: Wed Feb  8 19:57:47 CET 2012
+
+	Fixes:
+
+	- \ missing in pattern match of ::projection()
+	  rt.cpan.org#74774 [Heiko Klein]
+
 version 1.02: Wed Nov 23 09:24:16 CET 2011
 
 	Fixes:

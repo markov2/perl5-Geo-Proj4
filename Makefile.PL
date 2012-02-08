@@ -2,6 +2,9 @@ use ExtUtils::MakeMaker;
                                                                                 
 require 5.006;
 
+# increased per release
+my $relversion = '1.03';
+
 my $libversion = '4.4.9';
 
 # Should also work when you do not have FWTools installed...
@@ -29,7 +32,7 @@ die "ERROR: libproj too old, found $version required is $libversion\n"
 
 WriteMakefile
  ( NAME     => 'Geo::Proj4'
- , VERSION  => '1.02'
+ , VERSION  => $relversion
  , AUTHOR   => 'Mark Overmeer'
  , ABSTRACT => 'Proj4 library for carthographic projections'
  , INC      => "-I$FWTools/include"

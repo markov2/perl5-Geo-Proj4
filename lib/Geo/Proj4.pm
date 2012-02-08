@@ -153,7 +153,7 @@ Returns the projection type.
 
 sub projection()
 {   my $norm = shift->normalized;
-    $norm =~ m/\+proj\=(w+)/ ? $1 : undef;
+    $norm =~ m/\+proj\=(\w+)/ ? $1 : undef;
 }
 
 =method dump
