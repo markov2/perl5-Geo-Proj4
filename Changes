@@ -1,5 +1,12 @@
 Revision history for Perl extension Geo::Proj4.
 
+version 1.04: Fri Sep  7 12:54:23 CEST 2012
+
+	Fixes:
+
+	- proj4 version 4.8.0 does not install project.h anymore. Therefore,
+	  we carry our own now.  Flagged by [Jeff Huber]
+
 version 1.03: Wed Feb  8 19:57:47 CET 2012
 
 	Fixes:

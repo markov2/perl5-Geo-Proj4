@@ -2,9 +2,10 @@
 #include "perl.h"
 #include "XSUB.h"
 
-#include <projects.h>
-#include <proj_api.h>
 #include <math.h>
+
+#include "projects.h"
+#include <proj_api.h>
 
 MODULE = Geo::Proj4	PACKAGE = Geo::Proj4
 
