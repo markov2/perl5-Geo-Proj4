@@ -59,14 +59,14 @@ on both source and destination projection and use M<transform()>.
 
 =section Instantiation
 
-=c_method new STRING|OPTIONS
+=c_method new $string|%options
 The object defines the target projection, but that's easier said than
 done: projections have different parameter needs.  The parameters which
 can (or need to) be used are listed with C<cs2cs -lP>.  The manual
 page of C<cs2cs> explains how the configuration works.
 
 Two ways are provided to define the projection.  Either, use a list
-of OPTIONS, which are pairs of parameters, or pass one string which
+of %options, which are pairs of parameters, or pass one string which
 contains all parameters at once.  You must supply a C<proj> parameter.
 
 In case of an OPTION list: WARNING: Specify boolean parameters (e.g. the
@@ -109,6 +109,7 @@ sub new($@)
     $self;
 }
 
+#--------------
 =section Accessors
 
 =c_method error
@@ -189,11 +190,12 @@ projections are one-way.
 
 sub hasInverse() { has_inverse_proj4(shift) }
 
+#--------------
 =section Converters
 
-=method forward LATITUDE, LONGITUDE
+=method forward $latitude, $longitude
 
-Perform a forward projection from LATITUDE and LONGITUDE (LL) to the
+Perform a forward projection from $latitude and $longitude (LL) to the
 cartographic projection (XY) represented by the Geo::Proj4 instance.
 
 WARNING: for historic reasons, latitude and longitude are assumed to be in 
@@ -218,9 +220,9 @@ sub forward($$)
     forward_degrees_proj4($self, $lat, $long);
 }
 
-=method forwardRad LATITUDE, LONGITUDE
+=method forwardRad $latitude, $longitude
 
-Perform a forward projection from LATITUDE and LONGITUDE (LL) to the
+Perform a forward projection from $latitude and $longitude (LL) to the
 cartographic projection (XY) represented by the Geo::Proj4 instance.
 This function reflects to library function C<forward()>, expecting
 radians, not degrees.
@@ -232,7 +234,7 @@ sub forwardRad($$)
     forward_proj4($self, $lat, $long);
 }
 
-=method inverse (X,Y) | (LAT|LONG)
+=method inverse ($x,$y) | ($lat,$long)
 
 Perform an inverse projection from the (cartographic) projection represented
 by this Geo::Proj4 object, back into latitude and longitude values.
@@ -254,7 +256,7 @@ On error, C<inverse> will return undef for both values.
 
 sub inverse($$) { inverse_degrees_proj4(@_) }
 
-=method inverseRad (X,Y) | (LAT|LONG)
+=method inverseRad ($x,$y) | ($lat|$long)
 
 Perform an inverse projection from the (cartographic) projection
 represented by this Geo::Proj4 object, back into latitude and longitude
@@ -264,8 +266,8 @@ M<inverse()>.
 
 sub inverseRad($$) { inverse_proj4(@_) }
 
-=method transform TO, POINT|ARRAY-OF-POINTS
-Translate the POINTS into the projecten of TO.  Each point is specified
+=method transform $to, $point|ARRAY-of-$points
+Translate the $points into the projecten of $to.  Each point is specified
 as two or three values in an ARRAY.  In case of latlong source or
 destination projections, coordinates are translated into radians and/or
 back.  Both input and output values are always in X-Y/LongLat order.
@@ -304,8 +306,8 @@ sub transform($$)
     $err ? () : $pr;
 }
 
-=method transformRad TO, POINT|ARRAY-OF-POINTS
-Translate the POINTS into the projecten of TO.  Each point is specified
+=method transformRad $to, $point|ARRAY-of-$points
+Translate the $points into the projecten of $to.  Each point is specified
 as two or three values in an ARRAY.  In case of latlong source or
 destination projections, coordinates are expected to be in radians.
 Both input and output values are always in X-Y/LongLat order.
@@ -338,6 +340,7 @@ sub AUTOLOAD(@)
     die "$AUTOLOAD not implemented";
 }
 
+#--------------
 =section Library introspection
 
 =ci_method libVersion
@@ -362,7 +365,7 @@ Returns a list with all defined projection types.
 
 sub listTypes() { &def_types_proj4 }
 
-=c_method typeInfo LABEL
+=c_method typeInfo $label
 Returns a hash with information about the specified projection type.  With
 M<listTypes()>, all defined LABELS can be found.
 =cut
@@ -388,7 +391,7 @@ Returns a list with all defined ellips labels.
 
 sub listEllipsoids() { &def_ellps_proj4 }
 
-=c_method ellipsoidInfo LABEL
+=c_method ellipsoidInfo $label
 Returns a hash with information about the specified ellipsis.  With
 M<listEllipsoids()>, all defined LABELS can be found.
 =cut
@@ -412,7 +415,7 @@ Returns a list with all defined unit labels.
 
 sub listUnits() { &def_units_proj4 }
 
-=c_method unitInfo LABEL
+=c_method unitInfo $label
 Returns a hash with information about the specified unit.  With
 M<listUnits()>, all defined LABELS can be found.
 =cut
@@ -437,7 +440,7 @@ Returns a list with all defined datum labels.
 
 sub listDatums() { &def_datums_proj4 }
 
-=c_method datumInfo LABEL
+=c_method datumInfo $label
 Returns a hash with information about the specified datum.  With
 M<listDatums()>, all defined LABELS can be found.
 =cut
@@ -449,6 +452,7 @@ sub datumInfo($)
     \%def;
 }
 
+#--------------
 =chapter DETAILS
 
 =section Install

@@ -1,5 +1,10 @@
 Revision history for Perl extension Geo::Proj4.
 
+version 1.05: Tue Jan 21 14:32:06 CET 2014
+
+	Improvements:
+	- change documentation style.
+
 version 1.04: Fri Sep  7 12:54:23 CEST 2012
 
 	Fixes:
