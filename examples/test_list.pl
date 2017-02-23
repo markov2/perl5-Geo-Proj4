@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env perl
 # when run, it will show all definitions.
 use warnings;
 use strict;

@@ -9,7 +9,7 @@
 
 MODULE = Geo::Proj4	PACKAGE = Geo::Proj4
 
-#define NO_ERROR "no error"
+#define PROJ4_NO_ERROR "no error"
 
 int
 libproj_version_proj4()
@@ -27,16 +27,16 @@ new_proj4(defn)
 	rawstruct = pj_init_plus(defn);
 
 	if(rawstruct==NULL)
-        {   EXTEND(SP, 3);
-            PUSHs(&PL_sv_undef);
-	    PUSHs(sv_2mortal(newSViv(pj_errno)));
-	    PUSHs(sv_2mortal(newSVpv(pj_strerrno(pj_errno),0)));
+	{   EXTEND(SP, 3);
+		PUSHs(&PL_sv_undef);
+		PUSHs(sv_2mortal(newSViv(pj_errno)));
+		PUSHs(sv_2mortal(newSVpv(pj_strerrno(pj_errno),0)));
 	}
 	else
 	{   SV *object = newSV(0);
 	    sv_setref_pv(object, "Geo::Proj4", (void *)rawstruct);
 
-            XPUSHs(sv_2mortal(object));
+		XPUSHs(sv_2mortal(object));
 	}
 
 SV *
@@ -177,8 +177,8 @@ transform_proj4(proj_from, proj_to, points, degrees)
 
 	if(pj_transform(proj_from, proj_to, nrpoints, 0, x, y, z)==0)
 	{
-            XPUSHs(sv_2mortal(newSViv(0)));
-            XPUSHs(sv_2mortal(newSVpv(NO_ERROR, 0)));
+		XPUSHs(sv_2mortal(newSViv(0)));
+		XPUSHs(sv_2mortal(newSVpv(PROJ4_NO_ERROR, 0)));
 
 	    retlist = (AV *)sv_2mortal((SV *)newAV());
 
@@ -248,8 +248,8 @@ def_types_proj4(void)
                || strcmp(type->id,"geocent")==0
               ) continue;
 
-            PUSHs(sv_2mortal(newSVpv(type->id, 0)));
-        }
+            XPUSHs(sv_2mortal(newSVpv(type->id, 0)));
+	}
 #endif
 
 SV *
@@ -261,11 +261,11 @@ type_proj4(id)
 #if PJ_VERSION >= 449
 	for(type = pj_get_list_ref(); type->id; type++)
 	{   if(strcmp(id, type->id)!=0)
-                continue;
+			continue;
 
-            PUSHs(sv_2mortal(newSVpv(*type->descr, 0)));
-            break;
-        }
+		XPUSHs(sv_2mortal(newSVpv(*type->descr, 0)));
+		break;
+	}
 #endif
  
 SV *
@@ -275,8 +275,8 @@ def_ellps_proj4(void)
     PPCODE:
 #if PJ_VERSION >= 449
 	for(ellps = pj_get_ellps_ref(); ellps->id; ellps++)
-	{   PUSHs(sv_2mortal(newSVpv(ellps->id, 0)));
-        }
+	{   XPUSHs(sv_2mortal(newSVpv(ellps->id, 0)));
+    }
 #endif
 
 SV *
@@ -290,11 +290,11 @@ ellps_proj4(id)
 	{   if(strcmp(id, ellps->id)!=0)
                 continue;
 
-            PUSHs(sv_2mortal(newSVpv(ellps->major, 0)));
-            PUSHs(sv_2mortal(newSVpv(ellps->ell, 0)));
-            PUSHs(sv_2mortal(newSVpv(ellps->name, 0)));
-            break;
-        }
+		XPUSHs(sv_2mortal(newSVpv(ellps->major, 0)));
+		XPUSHs(sv_2mortal(newSVpv(ellps->ell, 0)));
+		XPUSHs(sv_2mortal(newSVpv(ellps->name, 0)));
+		break;
+	}
 #endif
  
 SV *
@@ -304,8 +304,8 @@ def_units_proj4(void)
     PPCODE:
 #if PJ_VERSION >= 449
 	for(unit = pj_get_units_ref(); unit->id; unit++)
-	{   PUSHs(sv_2mortal(newSVpv(unit->id, 0)));
-        }
+	{   XPUSHs(sv_2mortal(newSVpv(unit->id, 0)));
+    }
 #endif
 
 SV *
@@ -317,12 +317,12 @@ unit_proj4(id)
 #if PJ_VERSION >= 449
 	for(units = pj_get_units_ref(); units->id; units++)
 	{   if(strcmp(id, units->id)!=0)
-                continue;
+			continue;
 
-            PUSHs(sv_2mortal(newSVpv(units->to_meter, 0)));
-            PUSHs(sv_2mortal(newSVpv(units->name, 0)));
-            break;
-        }
+    	XPUSHs(sv_2mortal(newSVpv(units->to_meter, 0)));
+		XPUSHs(sv_2mortal(newSVpv(units->name, 0)));
+		break;
+	}
 #endif
  
 SV *
@@ -332,8 +332,8 @@ def_datums_proj4(void)
     PPCODE:
 #if PJ_VERSION >= 449
 	for(datum = pj_get_datums_ref(); datum->id; datum++)
-	{   PUSHs(sv_2mortal(newSVpv(datum->id, 0)));
-        }
+	{   XPUSHs(sv_2mortal(newSVpv(datum->id, 0)));
+	}
 #endif
 
 SV *
@@ -345,17 +345,17 @@ datum_proj4(id)
 #if PJ_VERSION >= 449
 	for(datum = pj_get_datums_ref(); datum->id; datum++)
 	{   if(strcmp(id, datum->id)!=0)
-                continue;
+			continue;
 
-            PUSHs(sv_2mortal(newSVpv(datum->ellipse_id, 0)));
-            PUSHs(sv_2mortal(newSVpv(datum->defn, 0)));
+		XPUSHs(sv_2mortal(newSVpv(datum->ellipse_id, 0)));
+		XPUSHs(sv_2mortal(newSVpv(datum->defn, 0)));
 
 	    if(datum->comments!=NULL && strlen(datum->comments))
-            {   PUSHs(sv_2mortal(newSVpv(datum->comments, 0)));
+        {   XPUSHs(sv_2mortal(newSVpv(datum->comments, 0)));
 	    }
 
-            break;
-        }
+		break;
+	}
 #endif
  
 void

@@ -1,5 +1,14 @@
 Revision history for Perl extension Geo::Proj4.
 
+version 1.06: Thu 23 Feb 10:24:01 CET 2017
+
+	Fixes:
+	- NO_ERROR renamed: name conflict on mingw32/Windows 10
+	  reported by [James P. Rushworth]
+	- do not symlink on windows
+	- crash on list functions from example, caused by a stack overflow.
+	  reported by [James P. Rushworth]
+
 version 1.05: Tue Jan 21 14:32:06 CET 2014
 
 	Improvements:

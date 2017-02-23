@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 require 5.006;
 
 # increased per release
-my $relversion = '1.05';
+my $relversion = '1.06';
 
 my $libversion = '4.4.9';
 
@@ -29,12 +29,14 @@ my $version = $1;
 $version ge $libversion
     or die "ERROR: libproj too old, found $version required is $libversion\n";
 
-unlink 'projects.h';
-my $own_projects = "src/$version/projects.h";
-if(-f $own_projects)
-{   symlink $own_projects, 'projects.h'
-        or die "ERROR: cannot install $own_projects: $!\n";
-    warn "installed $own_projects\n";
+if($^O ne 'MSWin32' && $^O ne 'cygwin')
+{   unlink 'projects.h';
+    my $own_projects = "src/$version/projects.h";
+    if(-f $own_projects)
+    {   symlink $own_projects, 'projects.h'
+            or die "ERROR: cannot install $own_projects: $!\n";
+        warn "installed $own_projects\n";
+    }
 }
 
 WriteMakefile
@@ -42,7 +44,7 @@ WriteMakefile
  , VERSION  => $relversion
  , AUTHOR   => 'Mark Overmeer'
  , ABSTRACT => 'Proj4 library for carthographic projections'
- , INC      => "-I. -I$FWTools/include"
+ , INC      => "-I$FWTools/include -I."
  , LIBS     => [ "-L$FWTools/lib -lproj" ]
  , LICENSE  => 'perl'
  );
