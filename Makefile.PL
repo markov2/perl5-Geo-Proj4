@@ -46,7 +46,7 @@ WriteMakefile
  , ABSTRACT => 'Proj4 library for carthographic projections'
  , INC      => "-I$FWTools/include -I."
  , LIBS     => [ "-L$FWTools/lib -lproj" ]
- , LICENSE  => 'perl'
+ , LICENSE  => 'perl_5'
 
  , META_MERGE =>
       { 'meta-spec' => { version => 2 }
@@ -56,9 +56,9 @@ WriteMakefile
              , url  => 'https://github.com/markov2/perl5-Geo-Proj4.git'
              , web  => 'https://github.com/markov2/perl5-Geo-Proj4'
              }
+         , homepage => 'http://perl.overmeer.net/CPAN/'
+         , license  => [ 'http://dev.perl.org/licenses/' ]
          }
-      , homepage => 'http://perl.overmeer.net/CPAN/'
-      , license  => [ 'http://dev.perl.org/licenses/' ]
       }
  );
 
