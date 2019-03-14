@@ -18,7 +18,7 @@ bootstrap Geo::Proj4; # $VERSION;
 
 =chapter NAME
 
-Geo::Proj4 - PROJ.4 cartographic projections library
+Geo::Proj4 - PROJ cartographic projections library
 
 =chapter SYNOPSIS
 
@@ -49,7 +49,7 @@ Geo::Proj4 - PROJ.4 cartographic projections library
 
 =chapter DESCRIPTION
 
-The Open Source PROJ.4 library converts between geographic coordinate
+The Open Source PROJ library converts between geographic coordinate
 systems.  It is able to convert between geodetic latitude and longitude
 (LL, most commonly the WGS84 projection), into an enormous variety of
 other cartographic projections (XY, usually UTM).
@@ -58,6 +58,11 @@ WARNING: It is not always clear what the source projection is when
 M<forward()> or M<inverse()> are used, i.e. in what projection system the
 source data is expected to be in.  Therefore, you can better be specific
 on both source and destination projection and use M<transform()>.
+
+Version '4' of this library existed that long that it became part of
+its domain name F<https://proj4.org> and this module.  However, in 2018
+it moved to version '5', and 2019 saw version '6'.  Also those versions
+are supported by this module.
 
 =chapter METHODS
 
