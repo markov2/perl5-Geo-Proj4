@@ -6,7 +6,7 @@ an html version of this and related modules;
 
 Effusive thanks to Frank Warmerdam (maintainer of PROJ.4) and Gerald
 Evenden (main contributor of PROJ.4). Their PROJ.4 library home page:
-L<http://www.remotesensing.org/proj/>
+L<http://proj4.org>
 
 proj(1), cs2cs(1), pj_init(3).
 

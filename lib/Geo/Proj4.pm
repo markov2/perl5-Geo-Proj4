@@ -464,7 +464,7 @@ sub datumInfo($)
 Geo::Proj4 uses XS to wrap the PROJ.4 cartographic projections library. You
 will need to have the PROJ.4 library installed in order to build and use
 this module. You can get source code and binaries for the PROJ.4 library
-from its home page at L<http://www.remotesensing.org/proj/>.
+from its home page at L<http://proj4.org>.
 
 =section Projections
 

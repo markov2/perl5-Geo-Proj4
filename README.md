@@ -22,7 +22,7 @@ Geo::Proj4 uses XS to wrap the PROJ.4 cartographic projections library.
 You will need to have at least version 4.4.9 of the PROJ.4 library
 installed in order to build and use this module. You can get source
 code and binaries for the PROJ.4 library from its home page at
-http://www.remotesensing.org/proj/.
+<http://proj4.org>.
 
 ### FWTools
 
