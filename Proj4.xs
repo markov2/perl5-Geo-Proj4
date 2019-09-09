@@ -4,8 +4,13 @@
 
 #include <math.h>
 
-#include "projects.h"
+#if GEOPROJ4_PROJ_API >= 6
+#define ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+#include <proj.h>
 #include <proj_api.h>
+#else
+#include "projects.h"
+#endif
 
 MODULE = Geo::Proj4	PACKAGE = Geo::Proj4
 
@@ -46,22 +51,48 @@ forward_degrees_proj4(proj, lat, lon)
 	double lon
     PROTOTYPE: $$$
     PREINIT:
+#if PJ_VERSION < 600
 	projUV in, out;
+#else
+    projLP in;
+    projXY out;
+#endif
     PPCODE:
+#if PJ_VERSION < 600
 	in.u = lon * DEG_TO_RAD;
 	in.v = lat * DEG_TO_RAD;
+#else
+	in.lam = lon * DEG_TO_RAD;
+	in.phi = lat * DEG_TO_RAD;
+#endif
 	out = pj_fwd(in, proj);
-	if(out.u == HUGE_VAL && out.v == HUGE_VAL) 
+#if PJ_VERSION < 600
+	if(out.u == HUGE_VAL && out.v == HUGE_VAL)
+#else
+	if(out.x == HUGE_VAL && out.y == HUGE_VAL)
+#endif
 	    XSRETURN_UNDEF;
 
 	EXTEND(SP, 2);
 	if(pj_is_latlong(proj))
-	{   PUSHs(sv_2mortal(newSVnv(out.u * RAD_TO_DEG)));
+	{
+#if PJ_VERSION < 600
+        PUSHs(sv_2mortal(newSVnv(out.u * RAD_TO_DEG)));
 	    PUSHs(sv_2mortal(newSVnv(out.v * RAD_TO_DEG)));
+#else
+        PUSHs(sv_2mortal(newSVnv(out.x * RAD_TO_DEG)));
+	    PUSHs(sv_2mortal(newSVnv(out.y * RAD_TO_DEG)));
+#endif
 	}
 	else
-	{   PUSHs(sv_2mortal(newSVnv(out.u)));
+	{
+#if PJ_VERSION < 600
+        PUSHs(sv_2mortal(newSVnv(out.u)));
 	    PUSHs(sv_2mortal(newSVnv(out.v)));
+#else
+        PUSHs(sv_2mortal(newSVnv(out.x)));
+	    PUSHs(sv_2mortal(newSVnv(out.y)));
+#endif
 	}
 
 SV *
@@ -71,18 +102,36 @@ forward_proj4(proj, lat, lon)
 	double lon
     PROTOTYPE: $$$
     PREINIT:
+#if PJ_VERSION < 600
 	projUV in, out;
-        projPJ toProj;
+#else
+    projLP in;
+    projXY out;
+#endif
     PPCODE:
+#if PJ_VERSION < 600
 	in.u = lon;
 	in.v = lat;
+#else
+	in.lam = lon;
+	in.phi = lat;
+#endif
 	out  = pj_fwd(in, proj);
-	if (out.u == HUGE_VAL && out.v == HUGE_VAL) 
+#if PJ_VERSION < 600
+	if (out.u == HUGE_VAL && out.v == HUGE_VAL)
+#else
+	if (out.x == HUGE_VAL && out.y == HUGE_VAL)
+#endif
 	    XSRETURN_UNDEF;
 
 	EXTEND(SP, 2);
+#if PJ_VERSION < 600
 	PUSHs(sv_2mortal(newSVnv(out.u)));
 	PUSHs(sv_2mortal(newSVnv(out.v)));
+#else
+	PUSHs(sv_2mortal(newSVnv(out.x)));
+	PUSHs(sv_2mortal(newSVnv(out.y)));
+#endif
 
 SV *
 inverse_degrees_proj4(proj, x, y)
@@ -91,24 +140,50 @@ inverse_degrees_proj4(proj, x, y)
 	double y
     PROTOTYPE: $$$
     PREINIT:
+#if PJ_VERSION < 600
 	projUV in, out;
+#else
+    projXY in;
+    projLP out;
+#endif
     PPCODE:
 	if(pj_is_latlong(proj))
-	{   in.u = x * DEG_TO_RAD;
+	{
+#if PJ_VERSION < 600
+        in.u = x * DEG_TO_RAD;
 	    in.v = y * DEG_TO_RAD;
+#else
+        in.x = x * DEG_TO_RAD;
+	    in.y = y * DEG_TO_RAD;
+#endif
 	}
 	else
-	{   in.u = x;
+	{
+#if PJ_VERSION < 600
+        in.u = x;
 	    in.v = y;
+#else
+        in.x = x;
+	    in.y = y;
+#endif
 	}
 
 	out = pj_inv(in, proj);
-	if (out.u == HUGE_VAL && out.v == HUGE_VAL) 
+#if PJ_VERSION < 600
+	if (out.u == HUGE_VAL && out.v == HUGE_VAL)
+#else
+	if (out.lam == HUGE_VAL && out.phi == HUGE_VAL)
+#endif
 	    XSRETURN_UNDEF;
 
 	EXTEND(SP, 2);
+#if PJ_VERSION < 600
 	PUSHs(sv_2mortal(newSVnv(out.v * RAD_TO_DEG)));
 	PUSHs(sv_2mortal(newSVnv(out.u * RAD_TO_DEG)));
+#else
+	PUSHs(sv_2mortal(newSVnv(out.lam * RAD_TO_DEG)));
+	PUSHs(sv_2mortal(newSVnv(out.phi * RAD_TO_DEG)));
+#endif
 
 SV *
 inverse_proj4(proj, x, y)
@@ -117,18 +192,37 @@ inverse_proj4(proj, x, y)
 	double y
     PROTOTYPE: $$$
     PREINIT:
+#if PJ_VERSION < 600
 	projUV in, out;
+#else
+    projXY in;
+    projLP out;
+#endif
     PPCODE:
+#if PJ_VERSION < 600
 	in.u = x;
 	in.v = y;
+#else
+	in.x = x;
+	in.y = y;
+#endif
 
 	out = pj_inv(in, proj);
-	if (out.u == HUGE_VAL && out.v == HUGE_VAL) 
+#if PJ_VERSION < 600
+	if (out.u == HUGE_VAL && out.v == HUGE_VAL)
+#else
+	if (out.lam == HUGE_VAL && out.phi == HUGE_VAL)
+#endif
 	    XSRETURN_UNDEF;
 
 	EXTEND(SP, 2);
+#if PJ_VERSION < 600
 	PUSHs(sv_2mortal(newSVnv(out.v)));
 	PUSHs(sv_2mortal(newSVnv(out.u)));
+#else
+	PUSHs(sv_2mortal(newSVnv(out.lam)));
+	PUSHs(sv_2mortal(newSVnv(out.phi)));
+#endif
 
 void
 transform_proj4(proj_from, proj_to, points, degrees)
@@ -142,7 +236,6 @@ transform_proj4(proj_from, proj_to, points, degrees)
 	double *x;
 	double *y;
 	double *z;
-	AV  *  res;
 	AV  *  retlist;
 	I32    nrpoints = 0;
 	I32    p;
@@ -213,7 +306,11 @@ has_inverse_proj4(proj)
 	projPJ proj
     PROTOTYPE: $
     CODE:
+#if PJ_VERSION < 600
 	RETVAL = (proj->inv ? 1 : 0);
+#else
+	RETVAL = (pj_has_inverse(proj) ? 1 : 0);
+#endif
     OUTPUT:
 	RETVAL
 
@@ -238,10 +335,14 @@ is_geocentric_proj4(proj)
 SV *
 def_types_proj4(void)
     PREINIT:
-	struct PJ_LIST *type;
+	const struct PJ_LIST *type;
     PPCODE:
 #if PJ_VERSION >= 449
+#if PJ_VERSION < 600
 	for(type = pj_get_list_ref(); type->id; type++)
+#else
+	for(type = proj_list_operations(); type->id; type++)
+#endif
 	{   /* same as "proj -l" does */
             if(   strcmp(type->id,"latlong")==0
                || strcmp(type->id,"longlat")==0
@@ -256,10 +357,14 @@ SV *
 type_proj4(id)
 	char * id
     PREINIT:
-	struct PJ_LIST *type;
+	const struct PJ_LIST *type;
     PPCODE:
 #if PJ_VERSION >= 449
+#if PJ_VERSION < 600
 	for(type = pj_get_list_ref(); type->id; type++)
+#else
+	for(type = proj_list_operations(); type->id; type++)
+#endif
 	{   if(strcmp(id, type->id)!=0)
 			continue;
 
@@ -271,10 +376,14 @@ type_proj4(id)
 SV *
 def_ellps_proj4(void)
     PREINIT:
-	struct PJ_ELLPS *ellps;
+	const struct PJ_ELLPS *ellps;
     PPCODE:
 #if PJ_VERSION >= 449
+#if PJ_VERSION < 600
 	for(ellps = pj_get_ellps_ref(); ellps->id; ellps++)
+#else
+	for(ellps = proj_list_ellps(); ellps->id; ellps++)
+#endif
 	{   XPUSHs(sv_2mortal(newSVpv(ellps->id, 0)));
     }
 #endif
@@ -283,10 +392,14 @@ SV *
 ellps_proj4(id)
 	char * id
     PREINIT:
-	struct PJ_ELLPS *ellps;
+	const struct PJ_ELLPS *ellps;
     PPCODE:
 #if PJ_VERSION >= 449
+#if PJ_VERSION < 600
 	for(ellps = pj_get_ellps_ref(); ellps->id; ellps++)
+#else
+	for(ellps = proj_list_ellps(); ellps->id; ellps++)
+#endif
 	{   if(strcmp(id, ellps->id)!=0)
                 continue;
 
@@ -300,10 +413,14 @@ ellps_proj4(id)
 SV *
 def_units_proj4(void)
     PREINIT:
-	struct PJ_UNITS *unit;
+	const struct PJ_UNITS *unit;
     PPCODE:
 #if PJ_VERSION >= 449
+#if PJ_VERSION < 600
 	for(unit = pj_get_units_ref(); unit->id; unit++)
+#else
+	for(unit = proj_list_units(); unit->id; unit++)
+#endif
 	{   XPUSHs(sv_2mortal(newSVpv(unit->id, 0)));
     }
 #endif
@@ -312,10 +429,14 @@ SV *
 unit_proj4(id)
 	char * id
     PREINIT:
-	struct PJ_UNITS *units;
+	const struct PJ_UNITS *units;
     PPCODE:
 #if PJ_VERSION >= 449
+#if PJ_VERSION < 600
 	for(units = pj_get_units_ref(); units->id; units++)
+#else
+	for(units = proj_list_units(); units->id; units++)
+#endif
 	{   if(strcmp(id, units->id)!=0)
 			continue;
 
@@ -328,21 +449,32 @@ unit_proj4(id)
 SV *
 def_datums_proj4(void)
     PREINIT:
+#if PJ_VERSION < 600
 	struct PJ_DATUMS *datum;
+#endif
     PPCODE:
 #if PJ_VERSION >= 449
+#if PJ_VERSION < 600
 	for(datum = pj_get_datums_ref(); datum->id; datum++)
 	{   XPUSHs(sv_2mortal(newSVpv(datum->id, 0)));
 	}
+#else
+/* Newer Proj does not export list of datums
+ * <https://github.com/markov2/perl5-Geo-Proj4/issues/1#issuecomment-364403196>
+ * */
+#endif
 #endif
 
 SV *
 datum_proj4(id)
 	char * id
     PREINIT:
+#if PJ_VERSION < 600
 	struct PJ_DATUMS *datum;
+#endif
     PPCODE:
 #if PJ_VERSION >= 449
+#if PJ_VERSION < 600
 	for(datum = pj_get_datums_ref(); datum->id; datum++)
 	{   if(strcmp(id, datum->id)!=0)
 			continue;
@@ -356,6 +488,12 @@ datum_proj4(id)
 
 		break;
 	}
+#else
+/* Newer Proj does not export list of datums
+ * <https://github.com/markov2/perl5-Geo-Proj4/issues/1#issuecomment-364403196>
+ * */
+    PERL_UNUSED_ARG(id);
+#endif
 #endif
  
 void

@@ -1,4 +1,5 @@
 use ExtUtils::MakeMaker;
+use Config;
                                                                                 
 require 5.006;
 
@@ -29,6 +30,9 @@ my $version = $1;
 $version ge $libversion
     or die "ERROR: libproj too old, found $version required is $libversion\n";
 
+my $projapiflags;
+$projapiflags = ' -DGEOPROJ4_PROJ_API=6' if $version ge '6.0.0';
+
 if($^O ne 'MSWin32' && $^O ne 'cygwin')
 {   unlink 'projects.h';
     my $own_projects = "src/$version/projects.h";
@@ -44,6 +48,7 @@ WriteMakefile
  , VERSION  => $relversion
  , AUTHOR   => 'Mark Overmeer'
  , ABSTRACT => 'Proj4 library for carthographic projections'
+ , CCFLAGS  => "$Config{ccflags}" . $projapiflags
  , INC      => "-I$FWTools/include -I."
  , LIBS     => [ "-L$FWTools/lib -lproj" ]
  , LICENSE  => 'perl_5'
