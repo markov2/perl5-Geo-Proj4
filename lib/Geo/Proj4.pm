@@ -6,7 +6,7 @@ package Geo::Proj4;
 
 use strict;
 use warnings;
-#our $VERSION = '0.96';
+our $VERSION = '6.0.0';
 
 use base 'DynaLoader';
 
@@ -48,6 +48,12 @@ Geo::Proj4 - PROJ cartographic projections library
   my $projected_multi = $from->transform($to, \@points);
 
 =chapter DESCRIPTION
+
+B<DEPRECATED: after a stable period of about 25 years under "version 4",
+this library has seen huge changes since 2018.  The changes are too
+structural to adapt this module to match them.  You can still manually
+install this module with the '4' version with some effort: see wiki
+in git.  I have no time or use to create a new module.  Sorry.>
 
 The Open Source PROJ library converts between geographic coordinate
 systems.  It is able to convert between geodetic latitude and longitude
@@ -209,12 +215,13 @@ cartographic projection (XY) represented by the Geo::Proj4 instance.
 
 WARNING: for historic reasons, latitude and longitude are assumed to be in 
 (floating point) degrees, although the library expects rads.  See
-M<forwardRad()>. A latitude south of the Equator and longitude west of
-the Prime Meridian given with negative values.
+M<forwardRad()>. A latitude South of the Equator or a longitude West of
+the Prime Meridian will give negative values.
 
 Returned are two values, usually X and Y in meters, or whatever units are
 relevant to the given projection.  When the destination projection also
-than the order of parameters will be returned as LONG,LAT (not lat,long!)
+is geodetic, than the order of parameters will be returned as LONG,LAT
+(not lat,long!)
 
 On error, C<forward> will return undef for both values.
 
@@ -243,10 +250,12 @@ sub forwardRad($$)
     forward_proj4($self, $lat, $long);
 }
 
+
 =method inverse ($x,$y) | ($lat,$long)
 
-Perform an inverse projection from the (cartographic) projection represented
-by this Geo::Proj4 object, back into latitude and longitude values.
+Perform an inverse projection from the (cartographic or geodetic)
+projection represented by this Geo::Proj4 object, back into latitude
+and longitude values.
 
 WARNING: for historic reasons, latitude and longitude are assumed to be in 
 (floating point) degrees, although the library expects rads.  See
@@ -265,6 +274,7 @@ On error, C<inverse> will return undef for both values.
 
 sub inverse($$) { inverse_degrees_proj4(@_) }
 
+
 =method inverseRad ($x,$y) | ($lat|$long)
 
 Perform an inverse projection from the (cartographic) projection
@@ -274,6 +284,7 @@ M<inverse()>.
 =cut
 
 sub inverseRad($$) { inverse_proj4(@_) }
+
 
 =method transform $to, $point|ARRAY-of-$points
 Translate the $points into the projecten of $to.  Each point is specified
@@ -315,7 +326,9 @@ sub transform($$)
     $err ? () : $pr;
 }
 
+
 =method transformRad $to, $point|ARRAY-of-$points
+
 Translate the $points into the projecten of $to.  Each point is specified
 as two or three values in an ARRAY.  In case of latlong source or
 destination projections, coordinates are expected to be in radians.
@@ -353,7 +366,7 @@ sub AUTOLOAD(@)
 =section Library introspection
 
 =ci_method libVersion
-Returns the version of the proj4 library
+Returns the version of the proj4 library.
 =cut
 
 sub libVersion()
@@ -361,6 +374,7 @@ sub libVersion()
     $version =~ s/./$&./g;
     $version;
 }
+
 
 =c_method listTypes
 Returns a list with all defined projection types.
@@ -373,6 +387,7 @@ Returns a list with all defined projection types.
 =cut
 
 sub listTypes() { &def_types_proj4 }
+
 
 =c_method typeInfo $label
 Returns a hash with information about the specified projection type.  With
@@ -388,6 +403,7 @@ sub typeInfo($)
     \%def;
 }
 
+
 =c_method listEllipsoids
 Returns a list with all defined ellips labels.
 
@@ -399,6 +415,7 @@ Returns a list with all defined ellips labels.
 =cut
 
 sub listEllipsoids() { &def_ellps_proj4 }
+
 
 =c_method ellipsoidInfo $label
 Returns a hash with information about the specified ellipsis.  With
@@ -412,6 +429,7 @@ sub ellipsoidInfo($)
     \%def;
 }
 
+
 =c_method listUnits
 Returns a list with all defined unit labels.
 
@@ -423,6 +441,7 @@ Returns a list with all defined unit labels.
 =cut
 
 sub listUnits() { &def_units_proj4 }
+
 
 =c_method unitInfo $label
 Returns a hash with information about the specified unit.  With
@@ -437,6 +456,7 @@ sub unitInfo($)
     \%def;
 }
 
+
 =c_method listDatums
 Returns a list with all defined datum labels.
 
@@ -448,6 +468,7 @@ Returns a list with all defined datum labels.
 =cut
 
 sub listDatums() { &def_datums_proj4 }
+
 
 =c_method datumInfo $label
 Returns a hash with information about the specified datum.  With
@@ -498,7 +519,5 @@ give negative values for south latitude and west longitude.  For
 calculating projections, this is more important than on maps.
 
 =cut
-
-# more text in PODTAIL.txt
 
 1;

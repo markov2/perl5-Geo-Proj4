@@ -3,13 +3,22 @@
   * My extended documentation: <http://perl.overmeer.net/CPAN/>
   * Development via GitHub: <https://github.com/markov2/perl5-Geo-Proj4>
   * Download from CPAN: <ftp://ftp.cpan.org/pub/CPAN/authors/id/M/MA/MARKOV/>
-  * Indexed from CPAN: <http://search.cpan.org/~markov/Geo-Proj4/>
-    and <https://metacpan.org/release/Geo-Proj4>
+  * Indexed from CPAN: <https://metacpan.org/release/Geo-Proj4>
 
 The Open Source PROJ.4 library converts between geographic coordinate
 systems.  It is able to convert between geodetic latitude and longitude
 (LL, most commonly the WGS84 projection), into an enormous variety of
 other cartographic projections (XY, usually UTM).
+
+## DEPRECATION
+
+After a stable period of about 25 years under "version 4", the proj
+library has seen huge changes since 2018.  The changes are too
+structural to adapt this module to match them.
+
+You can still manually install this module with the '4' version with some
+effort: see wiki in git.  I have no time or use to create a new module.
+Sorry.
 
 ## Install
 

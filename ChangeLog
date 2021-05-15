@@ -5,6 +5,9 @@ stated differently.
 
 version 1.10:
 
+	Changes:
+	- DEPRECATION
+
 	Fixes:
 	- fix metadata [Mohammad S Anwar]
 	- unify #! of examples rt.cpan.org#128827 [Petr Pisar]
@@ -12,6 +15,8 @@ version 1.10:
 
 	Improvements:
 	- explain the '4' in 'Proj4'
+	- add t/01use.t for basic environment display
+	- remove 4.8.0/projects.h copy
 
 version 1.09: Tue 23 Jan 17:59:12 CET 2018
 
