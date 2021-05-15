@@ -3,7 +3,12 @@
 All modifications where created by Mark Overmeer, unless explicitly
 stated differently.
 
-version 1.11:
+version 1.12:
+
+version 1.11: Sat 15 May 14:43:06 CEST 2021
+
+	Fixes:
+	- Versioning issue
 
 version 1.10.0: Sat 15 May 14:30:20 CEST 2021
 

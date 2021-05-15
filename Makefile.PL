@@ -2,7 +2,7 @@ use ExtUtils::MakeMaker;
                                                                                 
 require 5.10.0;
 
-my $VERSION = '1.11';
+my $VERSION = '1.12';
 
 open CS, "cs2cs 2>&1 |"
    or die "ERROR: proj library not found, where is cs2cs?\n";
