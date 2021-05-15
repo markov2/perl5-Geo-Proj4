@@ -6,7 +6,7 @@ package Geo::Proj4;
 
 use strict;
 use warnings;
-our $VERSION = '6.0.0';
+our $VERSION = '1.10.0';
 
 use base 'DynaLoader';
 
