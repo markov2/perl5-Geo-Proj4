@@ -20,6 +20,8 @@ You can still manually install this module with the '4' version with some
 effort: see wiki in git.  I have no time or use to create a new module.
 Sorry.
 
+If you start a new project, have a look at Geo::LibProj::FFI.
+
 ## Install
 
 You first have to install the libproj4 library.  Most Linux distributions
@@ -35,8 +37,8 @@ code and binaries for the PROJ.4 library from its home page at
 
 ### FWTools
 
-An other way to get the library is by installing FWTools, available
-at http://fwtools.maptools.org/
+An other way to get the proje library is by installing FWTools, available
+at <http://fwtools.maptools.org/>
 
 In case you have installed FWTools, set environment variable
 GEOPROJ\_FWTOOLS\_DIR to the right location, before running Makefile.PL

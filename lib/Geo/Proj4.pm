@@ -52,8 +52,10 @@ Geo::Proj4 - PROJ cartographic projections library
 B<DEPRECATED: after a stable period of about 25 years under "version 4",
 this library has seen huge changes since 2018.  The changes are too
 structural to adapt this module to match them.  You can still manually
-install this module with the '4' version with some effort: see wiki
+install this module with the '4' version with some effort: see the wiki
 in git.  I have no time or use to create a new module.  Sorry.>
+
+B<When you start a new project, then take a look at Geo::LibProj::FFI.>
 
 The Open Source PROJ library converts between geographic coordinate
 systems.  It is able to convert between geodetic latitude and longitude
